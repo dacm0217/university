@@ -27,7 +27,7 @@ services:
         container_name: dash_python
         build: "./dash"
         ports: 
-            - 8050:8050
+            - 8055:8055
         volumes: 
             - ./dash/archivosdash:/archivosdash
         depends_on:
