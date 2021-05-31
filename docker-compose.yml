@@ -1,0 +1,35 @@
+version: "2.1"
+
+services:
+    jupyter:
+        container_name: jupyter
+        build: "./jupyter"
+        ports: 
+            - 8888:8888
+        volumes: 
+            - ./jupyter/archivosju:/archivosju
+        environment: 
+            - JUPYTER_TOKEN=easy
+
+    mysql:
+        container_name: mysql
+        build: "./sql"
+        ports: 
+            - 3306:3306
+        volumes: 
+            - ./sql/dump:/docker-entrypoint-initdb.d
+            - ./sql/archivosmy:/archivosmy
+        environment: 
+            MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+            MYSQL_DATABASE: proyecto
+
+    dash:
+        container_name: dash_python
+        build: "./dash"
+        ports: 
+            - 8050:8050
+        volumes: 
+            - ./dash/archivosdash:/archivosdash
+        depends_on:
+            mysql:
+                condition: service_started
